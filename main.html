@@ -1,35 +1,30 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <title>MyBookList</title>
+    <style>
+        .delete {
+            cursor: pointer;
+        }
+    </style>
 </head>
-
 <body>
+    <h1>MyBookList</h1>
 
-	<h1>MyBookList</h1>
-	<div class=form-group>
-		<form>
-			<div>
-				<label for="label">Title</label><br>
-				<input type="text" name="" id="title">
-			</div>head
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" required><br>
 
-			<div>
-				<label for="author">Author</label><br>
-				<input type="text" name="" id="author">
-			</div>
+        <label for="author">Author:</label>
+        <input type="text" id="author" required><br>
 
-			<div>
-				<label for="isbn">ISBN#</label><br>
-				<input type="number" name="" id="isbn">
-			</div>
+        <label for="isbn">ISBN #:</label>
+        <input type="text" id="isbn" required><br>
 
-			<button type="submit" id="submit">Add Book</button>
-		</form>
-	</div>
-	<table class="table table-striped">
+        <button type="submit" id="submit">Submit</button>
+    </div>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Title</th>
@@ -39,28 +34,46 @@
             </tr>
         </thead>
         <tbody id="book-list"></tbody>
-			 <tr>
-				 <td></td>
-				 <td></td>
-				 <td></td>
-			 </tr>
-			 <tr>
-				 <td></td>
-				 <td></td>
-				 <td></td>
-			 </tr>
-			 <tr>
-				 <td></td>
-				 <td></td>
-				 <td></td>
-			 </tr>
     </table>
 
-	
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+    <script>
+        // Function to handle form submission
+        function submitForm(event) {
+            event.preventDefault(); // Prevent form from submitting and page refreshing
 
+            // Get input values
+            var title = document.getElementById('title').value;
+            var author = document.getElementById('author').value;
+            var isbn = document.getElementById('isbn').value;
+
+            // Add new row to the table
+            var table = document.getElementById('book-list');
+            var row = table.insertRow(-1); // Insert at the end
+
+            var titleCell = row.insertCell(0);
+            var authorCell = row.insertCell(1);
+            var isbnCell = row.insertCell(2);
+            var actionCell = row.insertCell(3);
+
+            titleCell.innerHTML = title;
+            authorCell.innerHTML = author;
+            isbnCell.innerHTML = isbn;
+            actionCell.innerHTML = '<button class="delete" onclick="deleteRow(this)">Clear</button>';
+
+            // Clear input fields
+            document.getElementById('title').value = '';
+            document.getElementById('author').value = '';
+            document.getElementById('isbn').value = '';
+        }
+
+        // Function to delete a row
+        function deleteRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        // Attach form submission event listener
+        document.getElementById('submit').addEventListener('click', submitForm);
+    </script>
 </body>
-
 </html>
